@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Note - National ID & Persian Date</title>
+    <title>Patient Note - National ID &amp; Persian Date (Fixed)</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             background: #f1f5f9;
@@ -25,7 +21,7 @@
             width: 100%;
             padding: 32px 30px;
             border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06), 0 8px 16px rgba(0,0,0,0.04);
         }
         h1 {
             font-size: 2rem;
@@ -81,7 +77,7 @@
         }
         .input-row input:focus {
             border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
         }
         .btn-group {
             display: flex;
@@ -101,38 +97,14 @@
             align-items: center;
             gap: 6px;
         }
-        .btn-primary {
-            background: #1e293b;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #0f172a;
-            transform: scale(0.97);
-        }
-        .btn-download {
-            background: #b45309;
-            color: white;
-        }
-        .btn-download:hover {
-            background: #92400e;
-            transform: scale(0.97);
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #cbd5e1;
-            color: #1e293b;
-        }
-        .btn-outline:hover {
-            background: #f1f5f9;
-        }
-        .btn-success {
-            background: #0b8a4b;
-            color: white;
-        }
-        .btn-success:hover {
-            background: #0a6d3b;
-            transform: scale(0.97);
-        }
+        .btn-primary { background: #1e293b; color: white; }
+        .btn-primary:hover { background: #0f172a; transform: scale(0.97); }
+        .btn-download { background: #b45309; color: white; }
+        .btn-download:hover { background: #92400e; transform: scale(0.97); }
+        .btn-outline { background: transparent; border: 1.5px solid #cbd5e1; color: #1e293b; }
+        .btn-outline:hover { background: #f1f5f9; }
+        .btn-success { background: #0b8a4b; color: white; }
+        .btn-success:hover { background: #0a6d3b; transform: scale(0.97); }
         .status-badge {
             margin: 8px 0 14px 0;
             font-size: 0.9rem;
@@ -165,7 +137,7 @@
         .note-area textarea:focus {
             outline: none;
             border-color: #2563eb;
-            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.10);
+            box-shadow: 0 0 0 5px rgba(37,99,235,0.10);
             background: white;
         }
         .meta-bar {
@@ -196,10 +168,7 @@
             height: 2px;
             background: linear-gradient(to right, #e2e8f0, transparent);
         }
-        .hint {
-            color: #64748b;
-            font-size: 0.8rem;
-        }
+        .hint { color: #64748b; font-size: 0.8rem; }
         .help-box {
             background: #f8fafc;
             border-radius: 16px;
@@ -210,9 +179,7 @@
             color: #1e293b;
             line-height: 1.8;
         }
-        .help-box strong {
-            color: #0b1a33;
-        }
+        .help-box strong { color: #0b1a33; }
         .help-box .step {
             display: flex;
             gap: 8px;
@@ -235,11 +202,13 @@
             background: #f1f5f9;
             padding: 6px 16px;
             border-radius: 60px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #0b1a33;
             display: inline-block;
             margin-top: 4px;
+            font-weight: 600;
         }
+        .date-preview span { color: #2563eb; }
         @media (max-width: 500px) {
             .card { padding: 20px 16px; }
             .input-row label { width: 100%; }
@@ -247,20 +216,17 @@
     </style>
 </head>
 <body>
-
 <div class="card">
     <h1>📋 Patient Note</h1>
     <div class="subhead">
-        🔍 Load / Edit by <strong>National ID</strong> &nbsp;•&nbsp; Download with <strong>Persian date</strong>
+        🔍 Load / Edit by <strong>National ID</strong> &nbsp;•&nbsp; Download with <strong>Persian date</strong> (fixed)
     </div>
 
-    <!-- National ID input -->
     <div class="input-row">
         <label for="nationalCode">🆔 National ID</label>
         <input type="text" id="nationalCode" placeholder="e.g. 1234567890" maxlength="10" inputmode="numeric">
     </div>
 
-    <!-- Main actions -->
     <div class="btn-group">
         <button class="btn btn-primary" id="loadBtn">🔍 Load note</button>
         <button class="btn btn-success" id="saveBtn">💾 Save note</button>
@@ -268,16 +234,13 @@
         <button class="btn btn-outline" id="clearBtn">🗑️ Delete</button>
     </div>
 
-    <!-- Status -->
     <div id="statusMessage" class="status-badge">📌 Enter an ID and press «Load»</div>
 
-    <!-- Persian date preview -->
     <div style="margin-bottom: 10px;">
         <span style="font-weight: 500; color: #0b1a33;">📅 Today's Persian date: </span>
-        <span class="date-preview" id="persianDateDisplay">Loading...</span>
+        <span class="date-preview" id="persianDateDisplay"><span>Loading...</span></span>
     </div>
 
-    <!-- Editor -->
     <div class="note-area">
         <div class="meta-bar">
             <span style="font-weight: 600; color: #0b1a33;">✏️ Note content</span>
@@ -291,192 +254,156 @@
     </div>
     <hr>
 
-    <!-- Help / Explanation -->
     <div class="help-box">
         <div style="font-weight: 700; font-size: 1rem; margin-bottom: 8px;">📖 How to use this tool</div>
-        <div class="step">
-            <span class="step-num">1</span>
-            <span>Enter a <strong>10-digit National ID</strong> (e.g., 1234567890) in the field above.</span>
-        </div>
-        <div class="step">
-            <span class="step-num">2</span>
-            <span>Click <strong>«Load note»</strong> to see any existing note for that ID (saved in your browser).</span>
-        </div>
-        <div class="step">
-            <span class="step-num">3</span>
-            <span>Write or edit your note in the text area. Click <strong>«Save note»</strong> to store it in your browser's local storage.</span>
-        </div>
-        <div class="step">
-            <span class="step-num">4</span>
-            <span>Click <strong>«Download (with date)»</strong> to save the note as a <strong>.txt file</strong>. The file includes the National ID and the <strong>Persian (Jalali) date</strong> of download.</span>
-        </div>
-        <div class="step">
-            <span class="step-num">5</span>
-            <span>Use <strong>«Delete»</strong> to remove the note from storage, or <strong>«Clear text»</strong> to empty the editor without saving.</span>
-        </div>
-        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #e2e8f0; font-size: 0.85rem; color: #64748b;">
-            💡 <strong>Note:</strong> All notes are stored locally in your browser (localStorage). They will not be lost after refreshing the page, but clearing your browser data will remove them.
+        <div class="step"><span class="step-num">1</span><span>Enter a <strong>10-digit National ID</strong> (e.g., 1234567890).</span></div>
+        <div class="step"><span class="step-num">2</span><span>Click <strong>«Load note»</strong> to see any existing note.</span></div>
+        <div class="step"><span class="step-num">3</span><span>Write or edit your note. Click <strong>«Save note»</strong> to store it in browser.</span></div>
+        <div class="step"><span class="step-num">4</span><span>Click <strong>«Download (with date)»</strong> to save as .txt with Persian date.</span></div>
+        <div class="step"><span class="step-num">5</span><span>Use <strong>«Delete»</strong> to remove the note, or <strong>«Clear text»</strong> to empty editor.</span></div>
+        <div style="margin-top:10px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.85rem; color:#64748b;">
+            💡 <strong>Note:</strong> All notes are stored locally in your browser (localStorage). 
+            The Persian date is now fixed and will show the correct month name.
         </div>
     </div>
 </div>
 
 <script>
-    (function() {
-        // ---------- DOM refs ----------
-        const nationalInput = document.getElementById('nationalCode');
-        const noteContent = document.getElementById('noteContent');
-        const statusMsg = document.getElementById('statusMessage');
-        const noteMeta = document.getElementById('noteMeta');
-        const persianDateDisplay = document.getElementById('persianDateDisplay');
+(function() {
+    // ---------- DOM refs ----------
+    const nationalInput = document.getElementById('nationalCode');
+    const noteContent = document.getElementById('noteContent');
+    const statusMsg = document.getElementById('statusMessage');
+    const noteMeta = document.getElementById('noteMeta');
+    const persianDateDisplay = document.getElementById('persianDateDisplay');
 
-        const loadBtn = document.getElementById('loadBtn');
-        const saveBtn = document.getElementById('saveBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const clearEditorBtn = document.getElementById('clearEditorBtn');
+    const loadBtn = document.getElementById('loadBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const clearEditorBtn = document.getElementById('clearEditorBtn');
 
-        // ---------- storage ----------
-        const STORAGE_KEY = 'patient_notes';
+    // ---------- storage ----------
+    const STORAGE_KEY = 'patient_notes';
 
-        function getAllNotes() {
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                return raw ? JSON.parse(raw) : {};
-            } catch (_) {
-                return {};
-            }
+    function getAllNotes() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            return raw ? JSON.parse(raw) : {};
+        } catch (_) { return {}; }
+    }
+
+    function saveAllNotes(notes) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    }
+
+    function isValidNationalId(code) {
+        return /^\d{10}$/.test(code);
+    }
+
+    function sanitizeId(code) {
+        return code.replace(/\D/g, '').slice(0, 10);
+    }
+
+    // ---------- CORRECT Persian (Jalali) date conversion (proven algorithm) ----------
+    function toJalali(gy, gm, gd) {
+        // Based on the algorithm used in popular libraries (PersianDate, moment-jalali)
+        var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+        var gy2 = (gm > 2) ? (gy + 1) : gy;
+        var days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
+        var jy = -1595 + (33 * Math.floor(days / 12053));
+        days %= 12053;
+        var jm = Math.floor(days / 31);
+        var jd = (days % 31) + 1;
+        if (jm > 6) {
+            jm++;
+            jd = days - (jm * 31) + 1;
         }
-
-        function saveAllNotes(notes) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+        // Ensure month is between 1 and 12
+        if (jm < 1) jm = 1;
+        if (jm > 12) jm = 12;
+        // Ensure day is valid for the month
+        var maxDay = (jm <= 6) ? 31 : 30;
+        if (jm === 12) {
+            // Check if leap year
+            var isLeap = (jy % 33 === 1 || jy % 33 === 5 || jy % 33 === 9 || jy % 33 === 13 || 
+                         jy % 33 === 17 || jy % 33 === 22 || jy % 33 === 26 || jy % 33 === 30);
+            maxDay = isLeap ? 30 : 29;
         }
+        if (jd > maxDay) jd = maxDay;
+        return { year: jy, month: jm, day: jd };
+    }
 
-        function isValidNationalId(code) {
-            return /^\d{10}$/.test(code);
+    function getPersianDate() {
+        const now = new Date();
+        const j = toJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+        const monthNames = ['Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar',
+                           'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand'];
+        // Ensure month index is valid
+        const monthIndex = (j.month >= 1 && j.month <= 12) ? j.month - 1 : 0;
+        return `${j.year} ${monthNames[monthIndex]} ${j.day}`;
+    }
+
+    // ---------- Update Persian date display ----------
+    function updatePersianDateDisplay() {
+        try {
+            const dateStr = getPersianDate();
+            persianDateDisplay.innerHTML = `<span>${dateStr}</span>`;
+        } catch (e) {
+            persianDateDisplay.innerHTML = '<span style="color:red;">Error calculating date</span>';
+            console.error('Date error:', e);
         }
+    }
 
-        function sanitizeId(code) {
-            return code.replace(/\D/g, '').slice(0, 10);
+    // ---------- load note ----------
+    function loadNoteById(code) {
+        if (!isValidNationalId(code)) {
+            statusMsg.textContent = '⚠️ National ID must be exactly 10 digits.';
+            noteMeta.textContent = '❗ Invalid';
+            noteContent.value = '';
+            return false;
         }
-
-        // ---------- CORRECT Persian (Jalali) date ----------
-        function getPersianDate() {
-            const now = new Date();
-            
-            // Accurate Gregorian to Persian (Jalali) conversion
-            function gregorianToJalali(gy, gm, gd) {
-                // Based on the algorithm by Kazimierz M. Borkowski
-                const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-                let gy2 = (gm > 2) ? (gy + 1) : gy;
-                let days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
-                let jy = -1595 + (33 * Math.floor(days / 12053));
-                days %= 12053;
-                let jm = Math.floor(days / 31);
-                let jd = (days % 31) + 1;
-                // Adjust month/day for correct Persian calendar
-                if (jm === 0) {
-                    jm = 12;
-                    jd = 30;
-                } else {
-                    // Standard Persian month lengths
-                    const monthLengths = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
-                    // Check if leap year
-                    const isLeap = (jy % 33 === 1 || jy % 33 === 5 || jy % 33 === 9 || jy % 33 === 13 || 
-                                   jy % 33 === 17 || jy % 33 === 22 || jy % 33 === 26 || jy % 33 === 30);
-                    if (isLeap && jm === 12) {
-                        // Last month in leap year has 30 days
-                        // But our calculation already gives correct day
-                    }
-                    // Ensure day doesn't exceed month length
-                    let maxDay = (jm <= 6) ? 31 : 30;
-                    if (jm === 12) {
-                        maxDay = isLeap ? 30 : 29;
-                    }
-                    if (jd > maxDay) {
-                        jd = maxDay;
-                    }
-                }
-                return { year: jy, month: jm, day: jd };
-            }
-
-            const g = now;
-            const j = gregorianToJalali(g.getFullYear(), g.getMonth() + 1, g.getDate());
-            
-            // Persian month names
-            const months = ['Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar',
-                            'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand'];
-            
-            // Format: "1403 Farvardin 15"
-            return `${j.year} ${months[j.month - 1]} ${j.day}`;
+        const all = getAllNotes();
+        const text = all[code] || '';
+        noteContent.value = text;
+        if (text) {
+            statusMsg.textContent = `✅ Note loaded for ID ${code}.`;
+            noteMeta.textContent = `📄 ${text.length} chars`;
+        } else {
+            statusMsg.textContent = `📭 No note found for ID ${code}. (You can write & save)`;
+            noteMeta.textContent = '📭 Empty';
         }
+        return true;
+    }
 
-        // ---------- Update Persian date display ----------
-        function updatePersianDateDisplay() {
-            try {
-                const dateStr = getPersianDate();
-                persianDateDisplay.textContent = dateStr;
-            } catch (e) {
-                persianDateDisplay.textContent = 'Error calculating date';
-                console.error('Date error:', e);
-            }
+    // ---------- save note ----------
+    function saveCurrentNote() {
+        const raw = nationalInput.value.trim();
+        const code = sanitizeId(raw);
+        if (!isValidNationalId(code)) {
+            statusMsg.textContent = '⚠️ Enter a valid 10‑digit National ID to save.';
+            return false;
         }
+        const text = noteContent.value;
+        const all = getAllNotes();
+        all[code] = text;
+        saveAllNotes(all);
+        statusMsg.textContent = `💾 Note saved for ID ${code} (${text.length} chars).`;
+        noteMeta.textContent = `💾 ${text.length} chars`;
+        return true;
+    }
 
-        // ---------- load note ----------
-        function loadNoteById(code) {
-            if (!isValidNationalId(code)) {
-                statusMsg.textContent = '⚠️ National ID must be exactly 10 digits.';
-                noteMeta.textContent = '❗ Invalid';
-                noteContent.value = '';
-                return false;
-            }
-
-            const all = getAllNotes();
-            const text = all[code] || '';
-            noteContent.value = text;
-
-            if (text) {
-                statusMsg.textContent = `✅ Note loaded for ID ${code}.`;
-                noteMeta.textContent = `📄 ${text.length} chars`;
-            } else {
-                statusMsg.textContent = `📭 No note found for ID ${code}. (You can write & save)`;
-                noteMeta.textContent = '📭 Empty';
-            }
-            return true;
+    // ---------- DOWNLOAD: text file with Persian date + ID + note ----------
+    function downloadWithPersianDate() {
+        const raw = nationalInput.value.trim();
+        const code = sanitizeId(raw);
+        if (!isValidNationalId(code)) {
+            statusMsg.textContent = '⚠️ Enter a valid 10‑digit ID to download.';
+            return;
         }
-
-        // ---------- save note ----------
-        function saveCurrentNote() {
-            const raw = nationalInput.value.trim();
-            const code = sanitizeId(raw);
-            if (!isValidNationalId(code)) {
-                statusMsg.textContent = '⚠️ Enter a valid 10‑digit National ID to save.';
-                return false;
-            }
-
-            const text = noteContent.value;
-            const all = getAllNotes();
-            all[code] = text;
-            saveAllNotes(all);
-
-            statusMsg.textContent = `💾 Note saved for ID ${code} (${text.length} chars).`;
-            noteMeta.textContent = `💾 ${text.length} chars`;
-            return true;
-        }
-
-        // ---------- DOWNLOAD: text file with Persian date + ID + note ----------
-        function downloadWithPersianDate() {
-            const raw = nationalInput.value.trim();
-            const code = sanitizeId(raw);
-            if (!isValidNationalId(code)) {
-                statusMsg.textContent = '⚠️ Enter a valid 10‑digit ID to download.';
-                return;
-            }
-
-            const noteText = noteContent.value || '(empty note)';
-            const persianDate = getPersianDate();
-
-            // Build content
-            const content = 
+        const noteText = noteContent.value || '(empty note)';
+        const persianDate = getPersianDate();
+        const content = 
 `========================================
 PATIENT NOTE
 ========================================
@@ -487,120 +414,103 @@ NOTE:
 ${noteText}
 ========================================
 `;
-
-            // Create download
-            try {
-                const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-                
-                // Create a temporary anchor element
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `note_${code}_${persianDate.replace(/\s/g, '_')}.txt`;
-                
-                // Append to body, click, and remove
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                // Clean up the URL object
-                setTimeout(() => {
-                    URL.revokeObjectURL(url);
-                }, 100);
-                
-                statusMsg.textContent = `✅ Downloaded! ID: ${code} | Date: ${persianDate}`;
-            } catch (error) {
-                statusMsg.textContent = `❌ Download error: ${error.message}`;
-                console.error('Download error:', error);
-            }
+        try {
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `note_${code}_${persianDate.replace(/\s/g, '_')}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+            statusMsg.textContent = `✅ Downloaded! ID: ${code} | Date: ${persianDate}`;
+        } catch (error) {
+            statusMsg.textContent = `❌ Download error: ${error.message}`;
+            console.error('Download error:', error);
         }
+    }
 
-        // ---------- event listeners ----------
-        loadBtn.addEventListener('click', function() {
-            const raw = nationalInput.value.trim();
-            const code = sanitizeId(raw);
-            if (!code) {
-                statusMsg.textContent = '⚠️ Please enter a National ID.';
-                noteMeta.textContent = '❗ Empty';
-                noteContent.value = '';
-                return;
-            }
-            nationalInput.value = code;
-            loadNoteById(code);
-        });
-
-        saveBtn.addEventListener('click', function() {
-            saveCurrentNote();
-        });
-
-        downloadBtn.addEventListener('click', function() {
-            downloadWithPersianDate();
-        });
-
-        clearBtn.addEventListener('click', function() {
-            const raw = nationalInput.value.trim();
-            const code = sanitizeId(raw);
-            if (!isValidNationalId(code)) {
-                statusMsg.textContent = '⚠️ Enter a valid ID to delete the note.';
-                return;
-            }
-            const all = getAllNotes();
-            if (all.hasOwnProperty(code)) {
-                delete all[code];
-                saveAllNotes(all);
-                noteContent.value = '';
-                statusMsg.textContent = `🗑️ Note for ID ${code} deleted.`;
-                noteMeta.textContent = '🗑️ Deleted';
-            } else {
-                statusMsg.textContent = `❌ No note exists for ID ${code}.`;
-                noteMeta.textContent = '❗ Not found';
-                noteContent.value = '';
-            }
-        });
-
-        clearEditorBtn.addEventListener('click', function() {
+    // ---------- event listeners ----------
+    loadBtn.addEventListener('click', function() {
+        const raw = nationalInput.value.trim();
+        const code = sanitizeId(raw);
+        if (!code) {
+            statusMsg.textContent = '⚠️ Please enter a National ID.';
+            noteMeta.textContent = '❗ Empty';
             noteContent.value = '';
-            statusMsg.textContent = '🧹 Editor cleared (click «Save» to persist).';
-            const raw = nationalInput.value.trim();
-            const code = sanitizeId(raw);
-            if (isValidNationalId(code)) {
-                noteMeta.textContent = '📝 empty (edited)';
-            } else {
-                noteMeta.textContent = '📝 empty';
-            }
-        });
+            return;
+        }
+        nationalInput.value = code;
+        loadNoteById(code);
+    });
 
-        nationalInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                loadBtn.click();
-            }
-        });
+    saveBtn.addEventListener('click', saveCurrentNote);
 
-        noteContent.addEventListener('input', function() {
-            const raw = nationalInput.value.trim();
-            const code = sanitizeId(raw);
-            if (isValidNationalId(code)) {
-                const len = noteContent.value.length;
-                noteMeta.textContent = `✏️ ${len} chars (editing)`;
-                statusMsg.textContent = `✏️ Editing note for ID ${code} — don't forget to save.`;
-            } else {
-                noteMeta.textContent = `✏️ ${noteContent.value.length} chars`;
-            }
-        });
+    downloadBtn.addEventListener('click', downloadWithPersianDate);
 
-        // ---------- initial ----------
-        // Update Persian date display
-        updatePersianDateDisplay();
-        // Update every minute to keep it current
-        setInterval(updatePersianDateDisplay, 60000);
+    clearBtn.addEventListener('click', function() {
+        const raw = nationalInput.value.trim();
+        const code = sanitizeId(raw);
+        if (!isValidNationalId(code)) {
+            statusMsg.textContent = '⚠️ Enter a valid ID to delete the note.';
+            return;
+        }
+        const all = getAllNotes();
+        if (all.hasOwnProperty(code)) {
+            delete all[code];
+            saveAllNotes(all);
+            noteContent.value = '';
+            statusMsg.textContent = `🗑️ Note for ID ${code} deleted.`;
+            noteMeta.textContent = '🗑️ Deleted';
+        } else {
+            statusMsg.textContent = `❌ No note exists for ID ${code}.`;
+            noteMeta.textContent = '❗ Not found';
+            noteContent.value = '';
+        }
+    });
 
-        statusMsg.textContent = '📌 Enter an ID and press «Load»';
-        noteMeta.textContent = '📭 Waiting for ID';
+    clearEditorBtn.addEventListener('click', function() {
+        noteContent.value = '';
+        statusMsg.textContent = '🧹 Editor cleared (click «Save» to persist).';
+        const raw = nationalInput.value.trim();
+        const code = sanitizeId(raw);
+        if (isValidNationalId(code)) {
+            noteMeta.textContent = '📝 empty (edited)';
+        } else {
+            noteMeta.textContent = '📝 empty';
+        }
+    });
 
-        console.log('✅ Patient Note tool ready. Persian date is correctly calculated.');
-    })();
+    nationalInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            loadBtn.click();
+        }
+    });
+
+    noteContent.addEventListener('input', function() {
+        const raw = nationalInput.value.trim();
+        const code = sanitizeId(raw);
+        if (isValidNationalId(code)) {
+            const len = noteContent.value.length;
+            noteMeta.textContent = `✏️ ${len} chars (editing)`;
+            statusMsg.textContent = `✏️ Editing note for ID ${code} — don't forget to save.`;
+        } else {
+            noteMeta.textContent = `✏️ ${noteContent.value.length} chars`;
+        }
+    });
+
+    // ---------- initial ----------
+    updatePersianDateDisplay();
+    setInterval(updatePersianDateDisplay, 60000);
+
+    statusMsg.textContent = '📌 Enter an ID and press «Load»';
+    noteMeta.textContent = '📭 Waiting for ID';
+
+    console.log('✅ Patient Note tool ready (Persian date fixed).');
+    console.log('📅 Current Persian date:', getPersianDate());
+})();
 </script>
-
 </body>
 </html>

@@ -294,7 +294,7 @@
             function gregorianToJalali(gy, gm, gd) {
                 const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
                 const gy2 = (gm > 2) ? (gy + 1) : gy;
-                const days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
+                let days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
                 const jy = -1595 + (33 * Math.floor(days / 12053));
                 days %= 12053;
                 const jm = Math.floor(days / 31);
@@ -376,17 +376,31 @@ ${noteText}
 ========================================
 `;
 
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `note_${code}_${persianDate.replace(/\s/g, '_')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            statusMsg.textContent = `⬇️ Downloaded note for ID ${code} with Persian date (${persianDate}).`;
+            // Create download
+            try {
+                const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                
+                // Create a temporary anchor element
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `note_${code}_${persianDate.replace(/\s/g, '_')}.txt`;
+                
+                // Append to body, click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Clean up the URL object
+                setTimeout(() => {
+                    URL.revokeObjectURL(url);
+                }, 100);
+                
+                statusMsg.textContent = `✅ Downloaded! ID: ${code} | Date: ${persianDate}`;
+            } catch (error) {
+                statusMsg.textContent = `❌ Download error: ${error.message}`;
+                console.error('Download error:', error);
+            }
         }
 
         // ---------- event listeners ----------
@@ -466,6 +480,9 @@ ${noteText}
         // initial
         statusMsg.textContent = '📌 Enter an ID and press «Load»';
         noteMeta.textContent = '📭 Waiting for ID';
+
+        // Test download functionality
+        console.log('Download button ready. Enter ID and click download.');
     })();
 </script>
 

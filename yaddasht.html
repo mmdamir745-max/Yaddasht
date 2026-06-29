@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Note - National ID & Persian Date</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+        .card {
+            background: #ffffff;
+            max-width: 780px;
+            width: 100%;
+            padding: 32px 30px;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 8px 16px rgba(0, 0, 0, 0.04);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+        .subhead {
+            color: #475569;
+            font-size: 0.95rem;
+            border-left: 4px solid #2563eb;
+            padding-left: 16px;
+            margin-bottom: 28px;
+            background: #f8fafc;
+            border-radius: 0 12px 12px 0;
+            line-height: 1.6;
+            padding: 8px 16px;
+        }
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+            align-items: center;
+        }
+        .input-row label {
+            font-weight: 600;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 0 18px;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            height: 48px;
+        }
+        .input-row input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 20px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 60px;
+            font-size: 1rem;
+            background: white;
+            transition: 0.15s;
+            outline: none;
+            height: 48px;
+        }
+        .input-row input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 22px 0;
+        }
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.12s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary {
+            background: #1e293b;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0f172a;
+            transform: scale(0.97);
+        }
+        .btn-download {
+            background: #b45309;
+            color: white;
+        }
+        .btn-download:hover {
+            background: #92400e;
+            transform: scale(0.97);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #cbd5e1;
+            color: #1e293b;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+        }
+        .btn-success {
+            background: #0b8a4b;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #0a6d3b;
+            transform: scale(0.97);
+        }
+        .status-badge {
+            margin: 8px 0 14px 0;
+            font-size: 0.9rem;
+            color: #1e293b;
+            background: #f1f5f9;
+            padding: 10px 20px;
+            border-radius: 60px;
+            display: inline-block;
+        }
+        .note-area {
+            margin-top: 24px;
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 24px;
+        }
+        .note-area textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 18px 22px;
+            border: 1.5px solid #d1d9e6;
+            border-radius: 24px;
+            font-size: 1rem;
+            line-height: 1.8;
+            resize: vertical;
+            font-family: inherit;
+            background: #fcfdff;
+            transition: 0.15s;
+            color: #0b1a33;
+        }
+        .note-area textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.10);
+            background: white;
+        }
+        .meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .badge {
+            background: #dbeafe;
+            color: #1e4a8a;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .footer-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        hr {
+            margin: 22px 0 14px 0;
+            border: 0;
+            height: 2px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+        .hint {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+        @media (max-width: 500px) {
+            .card { padding: 20px 16px; }
+            .input-row label { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>📋 Patient Note</h1>
+    <div class="subhead">
+        🔍 Load / Edit by <strong>National ID</strong> &nbsp;•&nbsp; Download with <strong>Persian date</strong>
+    </div>
+
+    <!-- National ID input -->
+    <div class="input-row">
+        <label for="nationalCode">🆔 National ID</label>
+        <input type="text" id="nationalCode" placeholder="e.g. 1234567890" maxlength="10" inputmode="numeric">
+    </div>
+
+    <!-- Main actions -->
+    <div class="btn-group">
+        <button class="btn btn-primary" id="loadBtn">🔍 Load note</button>
+        <button class="btn btn-success" id="saveBtn">💾 Save note</button>
+        <button class="btn btn-download" id="downloadBtn">⬇️ Download (with date)</button>
+        <button class="btn btn-outline" id="clearBtn">🗑️ Delete</button>
+    </div>
+
+    <!-- Status -->
+    <div id="statusMessage" class="status-badge">📌 Enter an ID and press «Load»</div>
+
+    <!-- Editor -->
+    <div class="note-area">
+        <div class="meta-bar">
+            <span style="font-weight: 600; color: #0b1a33;">✏️ Note content</span>
+            <span class="badge" id="noteMeta">No note</span>
+        </div>
+        <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+        <div class="footer-actions">
+            <button class="btn btn-outline" id="clearEditorBtn" style="font-size:0.8rem;">🧹 Clear text</button>
+            <span class="hint" style="margin-right: auto;">🔹 Edits are not saved automatically — click «Save»</span>
+        </div>
+    </div>
+    <hr>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-start; font-size:0.85rem; color:#475569;">
+        <span>💡 Notes stored in browser by <strong>National ID</strong>.</span>
+        <span>📥 Download as .txt with Persian date &amp; ID.</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- DOM refs ----------
+        const nationalInput = document.getElementById('nationalCode');
+        const noteContent = document.getElementById('noteContent');
+        const statusMsg = document.getElementById('statusMessage');
+        const noteMeta = document.getElementById('noteMeta');
+
+        const loadBtn = document.getElementById('loadBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const clearEditorBtn = document.getElementById('clearEditorBtn');
+
+        // ---------- storage ----------
+        const STORAGE_KEY = 'patient_notes';
+
+        function getAllNotes() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (_) {
+                return {};
+            }
+        }
+
+        function saveAllNotes(notes) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+        }
+
+        function isValidNationalId(code) {
+            return /^\d{10}$/.test(code);
+        }
+
+        function sanitizeId(code) {
+            return code.replace(/\D/g, '').slice(0, 10);
+        }
+
+        // ---------- Persian (Jalali) date ----------
+        function getPersianDate() {
+            const now = new Date();
+            // Gregorian to Persian (Jalali) conversion
+            function gregorianToJalali(gy, gm, gd) {
+                const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+                const gy2 = (gm > 2) ? (gy + 1) : gy;
+                const days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
+                const jy = -1595 + (33 * Math.floor(days / 12053));
+                days %= 12053;
+                const jm = Math.floor(days / 31);
+                const jd = (days % 31) + 1;
+                return { year: jy, month: jm + 1, day: jd };
+            }
+
+            const g = now;
+            const j = gregorianToJalali(g.getFullYear(), g.getMonth() + 1, g.getDate());
+            const months = ['Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar',
+                            'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand'];
+            return `${j.year} ${months[j.month - 1]} ${j.day}`;
+        }
+
+        // ---------- load note ----------
+        function loadNoteById(code) {
+            if (!isValidNationalId(code)) {
+                statusMsg.textContent = '⚠️ National ID must be exactly 10 digits.';
+                noteMeta.textContent = '❗ Invalid';
+                noteContent.value = '';
+                return false;
+            }
+
+            const all = getAllNotes();
+            const text = all[code] || '';
+            noteContent.value = text;
+
+            if (text) {
+                statusMsg.textContent = `✅ Note loaded for ID ${code}.`;
+                noteMeta.textContent = `📄 ${text.length} chars`;
+            } else {
+                statusMsg.textContent = `📭 No note found for ID ${code}. (You can write & save)`;
+                noteMeta.textContent = '📭 Empty';
+            }
+            return true;
+        }
+
+        // ---------- save note ----------
+        function saveCurrentNote() {
+            const raw = nationalInput.value.trim();
+            const code = sanitizeId(raw);
+            if (!isValidNationalId(code)) {
+                statusMsg.textContent = '⚠️ Enter a valid 10‑digit National ID to save.';
+                return false;
+            }
+
+            const text = noteContent.value;
+            const all = getAllNotes();
+            all[code] = text;
+            saveAllNotes(all);
+
+            statusMsg.textContent = `💾 Note saved for ID ${code} (${text.length} chars).`;
+            noteMeta.textContent = `💾 ${text.length} chars`;
+            return true;
+        }
+
+        // ---------- DOWNLOAD: text file with Persian date + ID + note ----------
+        function downloadWithPersianDate() {
+            const raw = nationalInput.value.trim();
+            const code = sanitizeId(raw);
+            if (!isValidNationalId(code)) {
+                statusMsg.textContent = '⚠️ Enter a valid 10‑digit ID to download.';
+                return;
+            }
+
+            const noteText = noteContent.value || '(empty note)';
+            const persianDate = getPersianDate();
+
+            // Build content
+            const content = 
+`========================================
+PATIENT NOTE
+========================================
+National ID    : ${code}
+Persian Date   : ${persianDate}
+----------------------------------------
+NOTE:
+${noteText}
+========================================
+`;
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `note_${code}_${persianDate.replace(/\s/g, '_')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            statusMsg.textContent = `⬇️ Downloaded note for ID ${code} with Persian date (${persianDate}).`;
+        }
+
+        // ---------- event listeners ----------
+        loadBtn.addEventListener('click', function() {
+            const raw = nationalInput.value.trim();
+            const code = sanitizeId(raw);
+            if (!code) {
+                statusMsg.textContent = '⚠️ Please enter a National ID.';
+                noteMeta.textContent = '❗ Empty';
+                noteContent.value = '';
+                return;
+            }
+            nationalInput.value = code;
+            loadNoteById(code);
+        });
+
+        saveBtn.addEventListener('click', function() {
+            saveCurrentNote();
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            downloadWithPersianDate();
+        });
+
+        clearBtn.addEventListener('click', function() {
+            const raw = nationalInput.value.trim();
+            const code = sanitizeId(raw);
+            if (!isValidNationalId(code)) {
+                statusMsg.textContent = '⚠️ Enter a valid ID to delete the note.';
+                return;
+            }
+            const all = getAllNotes();
+            if (all.hasOwnProperty(code)) {
+                delete all[code];
+                saveAllNotes(all);
+                noteContent.value = '';
+                statusMsg.textContent = `🗑️ Note for ID ${code} deleted.`;
+                noteMeta.textContent = '🗑️ Deleted';
+            } else {
+                statusMsg.textContent = `❌ No note exists for ID ${code}.`;
+                noteMeta.textContent = '❗ Not found';
+                noteContent.value = '';
+            }
+        });
+
+        clearEditorBtn.addEventListener('click', function() {
+            noteContent.value = '';
+            statusMsg.textContent = '🧹 Editor cleared (click «Save» to persist).';
+            const raw = nationalInput.value.trim();
+            const code = sanitizeId(raw);
+            if (isValidNationalId(code)) {
+                noteMeta.textContent = '📝 empty (edited)';
+            } else {
+                noteMeta.textContent = '📝 empty';
+            }
+        });
+
+        nationalInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                loadBtn.click();
+            }
+        });
+
+        noteContent.addEventListener('input', function() {
+            const raw = nationalInput.value.trim();
+            const code = sanitizeId(raw);
+            if (isValidNationalId(code)) {
+                const len = noteContent.value.length;
+                noteMeta.textContent = `✏️ ${len} chars (editing)`;
+                statusMsg.textContent = `✏️ Editing note for ID ${code} — don't forget to save.`;
+            } else {
+                noteMeta.textContent = `✏️ ${noteContent.value.length} chars`;
+            }
+        });
+
+        // initial
+        statusMsg.textContent = '📌 Enter an ID and press «Load»';
+        noteMeta.textContent = '📭 Waiting for ID';
+    })();
+</script>
+
+</body>
+</html>

@@ -246,7 +246,9 @@
             <span style="font-weight: 600; color: #0b1a33;">✏️ Note content</span>
             <span class="badge" id="noteMeta">No note</span>
         </div>
-        <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+        <!-- تغییرات اینجا اعمال شد: اضافه شدن dir="auto" -->
+        <textarea id="noteContent" placeholder="یادداشت خود را بنویسید... / Write your note here..." dir="auto"></textarea>
+        
         <div class="footer-actions">
             <button class="btn btn-outline" id="clearEditorBtn" style="font-size:0.8rem;">🧹 Clear text</button>
             <span class="hint" style="margin-right: auto;">🔹 Edits are not saved automatically — click «Save»</span>
@@ -310,8 +312,8 @@
         return new Intl.DateTimeFormat('fa-IR', {
             calendar: 'persian',
             year: 'numeric',
-            month: '2-digit', // ماه دو رقمی (مثل ۰۷)
-            day: '2-digit',   // روز دو رقمی (مثل ۰۶)
+            month: '2-digit', // ماه دو رقمی
+            day: '2-digit',   // روز دو رقمی
             timeZone: 'Asia/Tehran'
         }).format(now);
     }

@@ -1,3 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Note - National ID & Persian Date</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+        .card {
+            background: #ffffff;
+            max-width: 820px;
+            width: 100%;
+            padding: 32px 30px;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06), 0 8px 16px rgba(0,0,0,0.04);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+        }
+        .subhead {
+            color: #475569;
+            font-size: 0.95rem;
+            border-left: 4px solid #2563eb;
+            padding-left: 16px;
+            margin-bottom: 28px;
+            background: #f8fafc;
+            border-radius: 0 12px 12px 0;
+            line-height: 1.6;
+            padding: 8px 16px;
+        }
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+            align-items: center;
+        }
+        .input-row label {
+            font-weight: 600;
+            color: #0b1a33;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 0 18px;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            height: 48px;
+        }
+        .input-row input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 20px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 60px;
+            font-size: 1rem;
+            background: white;
+            transition: 0.15s;
+            outline: none;
+            height: 48px;
+        }
+        .input-row input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 22px 0;
+        }
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.12s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary { background: #1e293b; color: white; }
+        .btn-primary:hover { background: #0f172a; transform: scale(0.97); }
+        .btn-download { background: #b45309; color: white; }
+        .btn-download:hover { background: #92400e; transform: scale(0.97); }
+        .btn-outline { background: transparent; border: 1.5px solid #cbd5e1; color: #1e293b; }
+        .btn-outline:hover { background: #f1f5f9; }
+        .btn-success { background: #0b8a4b; color: white; }
+        .btn-success:hover { background: #0a6d3b; transform: scale(0.97); }
+        .status-badge {
+            margin: 8px 0 14px 0;
+            font-size: 0.9rem;
+            color: #1e293b;
+            background: #f1f5f9;
+            padding: 10px 20px;
+            border-radius: 60px;
+            display: inline-block;
+            min-height: 48px;
+        }
+        .note-area {
+            margin-top: 24px;
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 24px;
+        }
+        .note-area textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 18px 22px;
+            border: 1.5px solid #d1d9e6;
+            border-radius: 24px;
+            font-size: 1rem;
+            line-height: 1.8;
+            resize: vertical;
+            font-family: inherit;
+            background: #fcfdff;
+            transition: 0.15s;
+            color: #0b1a33;
+        }
+        .note-area textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 5px rgba(37,99,235,0.10);
+            background: white;
+        }
+        .meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .badge {
+            background: #dbeafe;
+            color: #1e4a8a;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .footer-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        hr {
+            margin: 22px 0 14px 0;
+            border: 0;
+            height: 2px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+        .hint { color: #64748b; font-size: 0.8rem; }
+        .help-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-top: 16px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+            color: #1e293b;
+            line-height: 1.8;
+        }
+        .help-box strong { color: #0b1a33; }
+        .help-box .step {
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+        }
+        .help-box .step-num {
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .date-preview {
+            background: #f1f5f9;
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            color: #0b1a33;
+            display: inline-block;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        .date-preview span { color: #2563eb; }
+        @media (max-width: 500px) {
+            .card { padding: 20px 16px; }
+            .input-row label { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>📋 Patient Note</h1>
+    <div class="subhead">
+        🔍 Load / Edit by <strong>National ID</strong> &nbsp;•&nbsp; Download with <strong>Persian date</strong> (✅ fixed)
+    </div>
+
+    <div class="input-row">
+        <label for="nationalCode">🆔 National ID</label>
+        <input type="text" id="nationalCode" placeholder="e.g. 1234567890" maxlength="10" inputmode="numeric">
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-primary" id="loadBtn">🔍 Load note</button>
+        <button class="btn btn-success" id="saveBtn">💾 Save note</button>
+        <button class="btn btn-download" id="downloadBtn">⬇️ Download (with date)</button>
+        <button class="btn btn-outline" id="clearBtn">🗑️ Delete</button>
+    </div>
+
+    <div id="statusMessage" class="status-badge">📌 Enter an ID and press «Load»</div>
+
+    <div style="margin-bottom: 10px;">
+        <span style="font-weight: 500; color: #0b1a33;">📅 Today's Persian date: </span>
+        <span class="date-preview" id="persianDateDisplay"><span>Loading...</span></span>
+    </div>
+
+    <div class="note-area">
+        <div class="meta-bar">
+            <span style="font-weight: 600; color: #0b1a33;">✏️ Note content</span>
+            <span class="badge" id="noteMeta">No note</span>
+        </div>
+        <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+        <div class="footer-actions">
+            <button class="btn btn-outline" id="clearEditorBtn" style="font-size:0.8rem;">🧹 Clear text</button>
+            <span class="hint" style="margin-right: auto;">🔹 Edits are not saved automatically — click «Save»</span>
+        </div>
+    </div>
+    <hr>
+
+    <div class="help-box">
+        <div style="font-weight: 700; font-size: 1rem; margin-bottom: 8px;">📖 How to use</div>
+        <div class="step"><span class="step-num">1</span><span>Enter a <strong>10-digit National ID</strong>.</span></div>
+        <div class="step"><span class="step-num">2</span><span>Click <strong>«Load note»</strong> to see existing note.</span></div>
+        <div class="step"><span class="step-num">3</span><span>Write/edit note. Click <strong>«Save note»</strong> to store.</span></div>
+        <div class="step"><span class="step-num">4</span><span>Click <strong>«Download (with date)»</strong> to save as .txt with Persian date.</span></div>
+        <div class="step"><span class="step-num">5</span><span>Use <strong>«Delete»</strong> or <strong>«Clear text»</strong>.</span></div>
+        <div style="margin-top:10px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.85rem; color:#64748b;">
+            ✅ <strong>Persian date is now fixed</strong> — uses native browser API (100% accurate).
+        </div>
+    </div>
+</div>
+
 <script>
 (function() {
     // ---------- DOM refs ----------
@@ -35,54 +304,17 @@
         return code.replace(/\D/g, '').slice(0, 10);
     }
 
-    // ---------- تبدیل اعداد انگلیسی به فارسی ----------
-    function toPersianNum(num) {
-        const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
-        return num.toString().replace(/\d/g, d => persianDigits[d]);
-    }
-
-    // ---------- PERSIAN DATE CONVERTER (الگوریتم استاندارد و بی‌نقص jalaali-js) ----------
-    function gregorianToJalali(gy, gm, gd) {
-        var g_d_m, jy, jm, jd, gy2, days;
-        g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-        gy2 = (gm > 2) ? (gy + 1) : gy;
-        days = 355666 + (365 * gy) + (parseInt((gy2 + 3) / 4)) - (parseInt((gy2 + 99) / 100)) + (parseInt((gy2 + 399) / 400)) + gd + g_d_m[gm - 1];
-        jy = -1595 + (33 * parseInt(days / 12053));
-        days %= 12053;
-        jy += 4 * parseInt(days / 1461);
-        days %= 1461;
-        if(days > 365) {
-            jy += parseInt((days - 1) / 365);
-            days = (days - 1) % 365;
-        }
-        if(days < 186) {
-            jm = 1 + parseInt(days / 31);
-            jd = 1 + (days % 31);
-        } else {
-            jm = 7 + parseInt((days - 186) / 30);
-            jd = 1 + ((days - 186) % 30);
-        }
-        return { year: jy, month: jm, day: jd };
-    }
-
+    // ---------- PERSIAN DATE (Native Browser API - 100% Accurate & Bug Free) ----------
     function getPersianDate() {
         const now = new Date();
-        
-        // رفع باگ مهم: اجبار به استفاده از منطقه زمانی تهران
-        const options = { timeZone: 'Asia/Tehran' };
-        const tehranString = now.toLocaleString('en-US', options);
-        const tehranDate = new Date(tehranString);
-
-        const j = gregorianToJalali(tehranDate.getFullYear(), tehranDate.getMonth() + 1, tehranDate.getDate());
-        
-        const monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-                           'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-                           
-        const pYear = toPersianNum(j.year);
-        const pDay = toPersianNum(j.day);
-        const monthName = monthNames[j.month - 1];
-
-        return `${pDay} ${monthName} ${pYear}`;
+        // این روش کاملاً استاندارد است، باگ کبیسه‌گیری نداره و منطقه زمانی هم روی تهران قفل شده
+        return new Intl.DateTimeFormat('fa-IR', {
+            calendar: 'persian',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            timeZone: 'Asia/Tehran'
+        }).format(now);
     }
 
     // ---------- Update Persian date display ----------
@@ -91,7 +323,7 @@
             const dateStr = getPersianDate();
             persianDateDisplay.innerHTML = `<span>${dateStr}</span>`;
         } catch (e) {
-            persianDateDisplay.innerHTML = '<span style="color:red;">Error</span>';
+            persianDateDisplay.innerHTML = '<span style="color:red;">Error in Date</span>';
             console.error('Date error:', e);
         }
     }
@@ -145,7 +377,6 @@
         const noteText = noteContent.value || '(empty note)';
         const persianDate = getPersianDate();
         
-        // در نام فایل از تاریخ فارسی استفاده نمی‌کنیم چون ممکنه در بعضی سیستم‌ها مشکل ایجاد کنه، فقط در محتوا میذاریم
         const content = 
 `========================================
 PATIENT NOTE
@@ -162,6 +393,7 @@ NOTE:
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
+            // برای جلوگیری از بهم ریختگی نام فایل در سیستم‌های مختلف، تاریخ رو از اسم فایل حذف کردم (داخل فایل نوشته شده)
             link.download = `note_${code}.txt`;
             document.body.appendChild(link);
             link.click();
@@ -245,9 +477,11 @@ NOTE:
 
     // ---------- initial ----------
     updatePersianDateDisplay();
-    setInterval(updatePersianDateDisplay, 60000);
+    setInterval(updatePersianDateDisplay, 60000); // آپدیت خودکار هر یک دقیقه
 
     statusMsg.textContent = '📌 Enter an ID and press «Load»';
     noteMeta.textContent = '📭 Waiting for ID';
 })();
 </script>
+</body>
+</html>

@@ -262,7 +262,7 @@
         <div class="step"><span class="step-num">4</span><span>Click <strong>«Download (with date)»</strong> to save as .txt with Persian date.</span></div>
         <div class="step"><span class="step-num">5</span><span>Use <strong>«Delete»</strong> or <strong>«Clear text»</strong>.</span></div>
         <div style="margin-top:10px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.85rem; color:#64748b;">
-            ✅ <strong>Persian date is now fixed</strong> — uses native browser API (100% accurate).
+            ✅ <strong>Persian date format fixed</strong> — Standard YYYY/MM/DD.
         </div>
     </div>
 </div>
@@ -304,15 +304,14 @@
         return code.replace(/\D/g, '').slice(0, 10);
     }
 
-    // ---------- PERSIAN DATE (Native Browser API - 100% Accurate & Bug Free) ----------
+    // ---------- PERSIAN DATE (فرمت استاندارد خط تاب‌دار: ۱۴۰۳/۱۰/۱۶) ----------
     function getPersianDate() {
         const now = new Date();
-        // این روش کاملاً استاندارد است، باگ کبیسه‌گیری نداره و منطقه زمانی هم روی تهران قفل شده
         return new Intl.DateTimeFormat('fa-IR', {
             calendar: 'persian',
-            day: 'numeric',
-            month: 'long',
             year: 'numeric',
+            month: '2-digit', // ماه دو رقمی (مثل ۰۷)
+            day: '2-digit',   // روز دو رقمی (مثل ۰۶)
             timeZone: 'Asia/Tehran'
         }).format(now);
     }
@@ -393,7 +392,6 @@ NOTE:
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            // برای جلوگیری از بهم ریختگی نام فایل در سیستم‌های مختلف، تاریخ رو از اسم فایل حذف کردم (داخل فایل نوشته شده)
             link.download = `note_${code}.txt`;
             document.body.appendChild(link);
             link.click();
@@ -477,7 +475,7 @@ NOTE:
 
     // ---------- initial ----------
     updatePersianDateDisplay();
-    setInterval(updatePersianDateDisplay, 60000); // آپدیت خودکار هر یک دقیقه
+    setInterval(updatePersianDateDisplay, 60000);
 
     statusMsg.textContent = '📌 Enter an ID and press «Load»';
     noteMeta.textContent = '📭 Waiting for ID';
